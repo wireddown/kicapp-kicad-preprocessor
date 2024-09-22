@@ -5,6 +5,9 @@ description = "kicapp is a tool that prepares EDA files for importing into KiCad
 authors = ["Down to the Wire <8404598+wireddown@users.noreply.github.com>"]
 readme = "README.md"
 
+[tool.poetry.scripts]
+kicapp = 'kicapp.console:run'
+
 [tool.poetry.dependencies]
 python = "^3.11"
 click = "^8.1.7"
