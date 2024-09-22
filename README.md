@@ -1,6 +1,26 @@
 # kicapp-kicad-preprocessor
 kicapp is a tool that prepares EDA files for importing into KiCad
 
+## Contributing
+
+### Do once
+
+```
+$ poetry install
+```
+
+### Dev loop
+
+```
+$ poetry check
+
+$ poetry run pytest
+
+$ poetry run ruff check --diff
+
+$ poetry run pyright --dependencies --stats
+```
+
 ## Resources
 
 - https://python-poetry.org/docs/
