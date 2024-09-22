@@ -18,6 +18,14 @@ pytest = "^8.3.3"
 ruff = "^0.6.7"
 pyright = "^1.1.381"
 
+[tool.pytest.ini_options]
+addopts = "--showlocals -rfE"
+
+[tool.ruff]
+
+[tool.pyright]
+verboseOutput = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
