@@ -14,6 +14,8 @@ $ poetry install
 ### Dev loop
 
 ```
+$ poetry run kicapp [OPTIONS] COMMAND [ARGS]
+
 $ poetry check
 
 $ poetry poe test
