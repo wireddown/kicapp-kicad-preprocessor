@@ -1,4 +1,7 @@
-def run():
+import click
+
+@click.group()
+def cli():
     pass
 
 def run():
