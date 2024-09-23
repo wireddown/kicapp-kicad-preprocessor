@@ -1,4 +1,4 @@
-"""Tests for the command line interface."""
+"""Tests for the kicapp command line interface."""
 
 from click.testing import CliRunner
 

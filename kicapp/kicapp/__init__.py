@@ -1,1 +1,1 @@
-"""kicapp module."""
+"""kicapp package."""

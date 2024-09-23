@@ -1,1 +1,1 @@
-"""Entrypoint for kicapp module."""
+"""Entrypoint for kicapp package."""
