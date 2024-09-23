@@ -6,6 +6,8 @@ kicapp is a tool that prepares EDA files for importing into KiCad
 ### Do once
 
 ```
+$ pipx install poetry
+$ pipx inject poetry poethepoet
 $ poetry install
 ```
 
@@ -14,18 +16,15 @@ $ poetry install
 ```
 $ poetry check
 
-$ poetry run pytest
+$ poetry poe test
 
-$ poetry run ruff check
-
-$ poetry run ruff format --diff
-
-$ poetry run pyright
+$ poetry poe lint
 ```
 
 ## Resources
 
 - https://python-poetry.org/docs/
+- https://poethepoet.natn.io/index.html
 - https://click.palletsprojects.com/en/8.1.x/
 - https://docs.pytest.org/en/stable/
 - https://docs.astral.sh/ruff/
