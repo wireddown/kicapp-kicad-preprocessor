@@ -5,7 +5,7 @@ import click
 
 @click.group()
 def cli() -> None:
-    """Entrypoint for invocation as command line program."""
+    """Run a command to prepare EDA files for importing into KiCad."""
 
 
 def run() -> None:
