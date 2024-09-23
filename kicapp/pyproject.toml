@@ -72,6 +72,11 @@ extend-select = [
     "W",
 ]
 
+[tool.ruff.lint.per-file-ignores]
+"tests/**.py" = [
+    "S101",
+]
+
 [tool.pyright]
 verboseOutput = true
 
