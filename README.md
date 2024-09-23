@@ -16,9 +16,11 @@ $ poetry check
 
 $ poetry run pytest
 
-$ poetry run ruff check --diff
+$ poetry run ruff check
 
-$ poetry run pyright --dependencies --stats
+$ poetry run ruff format --diff
+
+$ poetry run pyright
 ```
 
 ## Resources
