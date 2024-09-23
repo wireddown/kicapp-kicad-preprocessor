@@ -17,9 +17,11 @@ click = "^8.1.7"
 _ruff_check = "ruff check"
 _ruff_diff = "ruff format --diff"
 _pyright = "pyright"
-test = "pytest"
+lint.help = "Run the linters and formatters for the package."
 lint.sequence = ["_ruff_check", "_ruff_diff", "_pyright"]
 lint.ignore_fail = "return_zero"
+test.help = "Run the tests for the package."
+test.cmd = "pytest"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
