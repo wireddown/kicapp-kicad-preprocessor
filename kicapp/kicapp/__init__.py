@@ -1,0 +1,1 @@
+"""kicapp module."""
