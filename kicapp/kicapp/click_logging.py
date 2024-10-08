@@ -5,20 +5,6 @@ import logging
 import click
 
 
-def show_logging_demo(logger: logging.Logger):
-    """Show the different kinds of messages for the specified logger."""
-    logger.debug("debug world")
-    logger.info("info world")
-    logger.warning("warning world")
-    logger.error("error world")
-    logger.critical("critical world")
-    try:
-        raise NameError("name error world")
-    except NameError as err:
-        logger.exception(err)
-    logger.warning("exception handled")
-
-
 class ClickHandler(logging.Handler):
     _use_stderr = True
 
@@ -83,3 +69,31 @@ class ColorFormatter(logging.Formatter):
         formatted_entry = '\n'.join(f"{entry_prefix} {line}".strip() for line in message_strings)
 
         return formatted_entry
+
+
+def buildClickHandler(log_level) -> ClickHandler:
+    """Create a logging Handler with click and color support."""
+    click_handler = ClickHandler()
+    click_handler.setLevel(log_level)
+    color_formatter = ColorFormatter()
+    color_formatter.setLevel(log_level)
+    click_handler.setFormatter(color_formatter)
+    return click_handler
+
+
+def setLoggingLevel(level):
+    """Set the specified level on the underlying handler and formatter."""
+
+
+def show_logging_demo(logger: logging.Logger):
+    """Show the different kinds of messages for the specified logger."""
+    logger.debug("debug world")
+    logger.info("info world")
+    logger.warning("warning world")
+    logger.error("error world")
+    logger.critical("critical world")
+    try:
+        raise NameError("name error world")
+    except NameError as err:
+        logger.exception(err)
+    logger.warning("exception handled")
