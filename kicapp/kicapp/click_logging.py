@@ -4,6 +4,21 @@ import logging
 
 import click
 
+
+def show_logging_demo(logger: logging.Logger):
+    """Show the different kinds of messages for the specified logger."""
+    logger.debug("debug world")
+    logger.info("info world")
+    logger.warning("warning world")
+    logger.error("error world")
+    logger.critical("critical world")
+    try:
+        raise NameError("name error world")
+    except NameError as err:
+        logger.exception(err)
+    logger.warning("exception handled")
+
+
 class ClickHandler(logging.Handler):
     _use_stderr = True
 
