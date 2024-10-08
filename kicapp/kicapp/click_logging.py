@@ -25,6 +25,25 @@ class ColorFormatter(logging.Formatter):
         'debug': dict(fg='white'),
     }
 
+    def __init__(self, level=logging.NOTSET):
+        self.level = self._checkLevel(level)
+
+    def _checkLevel(self, level):
+        if isinstance(level, int):
+            valid_level = level
+        elif str(level) == level:
+            valid_levels = logging.getLevelNamesMapping()
+            if level not in valid_levels:
+                raise ValueError("Unknown level: %r" % level)
+            valid_level = valid_levels[level]
+        else:
+            raise TypeError("Level not an integer or a valid string: %r"
+                            % (level,))
+        return valid_level
+
+    def setLevel(self, level):
+        self.level = self._checkLevel(level)
+
     def format(self, record):
         if not record.exc_info:
             formatted_message = record.getMessage()
@@ -32,7 +51,7 @@ class ColorFormatter(logging.Formatter):
             color_style = self.colors.get(level, dict(fg="bright_white"))
             time_string = ""
             location_string = ""
-            if logger.level < logging.WARNING:
+            if self.level < logging.WARNING:
                 timestamp = logging.time.localtime(record.created)
                 time_string = click.style(f"{logging.time.strftime('%Y.%m.%d %H:%M:%S', timestamp)}.{record.msecs:03.0f}", **color_style)
                 location_string = click.style(f"{record.name:>30}::{record.funcName} L{record.lineno:>4}", **color_style)
