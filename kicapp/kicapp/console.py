@@ -8,6 +8,7 @@ import kicapp.click_logging
 
 logger = logging.getLogger(__name__)
 
+
 @click.group(invoke_without_command=True)
 @click.help_option()
 @click.option("-q", "--quiet", is_flag=True, default=False, help="Suppress warning messages.")

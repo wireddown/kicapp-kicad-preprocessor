@@ -6,9 +6,12 @@ import click
 
 
 class ClickHandler(logging.Handler):
+    """A logging.Handler that uses click.echo() to emit records."""
+
     _use_stderr = True
 
-    def emit(self, record):
+    def emit(self, record: logging.LogRecord) -> None:
+        """Log the specified logging record with click.echo()."""
         try:
             formatted_entry = self.format(record)
             click.echo(formatted_entry, err=self._use_stderr)
@@ -17,35 +20,41 @@ class ClickHandler(logging.Handler):
 
 
 class ColorFormatter(logging.Formatter):
-    colors = {
-        'critical': dict(fg='bright_magenta'),
-        'exception': dict(fg='red'),
-        'error': dict(fg='red'),
-        'warning': dict(fg='yellow'),
-        'info': dict(fg='cyan'),
-        'debug': dict(fg='white'),
+    """A logging.Formatter that uses click.style() to format records."""
+
+    COLORS = {
+        "critical": {"fg": "bright_magenta"},
+        "exception": {"fg": "red"},
+        "error": {"fg": "red"},
+        "warning": {"fg": "yellow"},
+        "info": {"fg": "cyan"},
+        "debug": {"fg": "white"},
     }
 
-    def __init__(self, level=logging.NOTSET):
-        self.level = self._checkLevel(level)
+    def __init__(self, level: int | str = logging.NOTSET) -> None:
+        """Create a new ColorFormatter with the specific logging level."""
+        self.level = self._check_level(level)
 
-    def _checkLevel(self, level):
+    def _check_level(self, level: int | str) -> int:
         if isinstance(level, int):
             valid_level = level
         elif str(level) == level:
             valid_levels = logging.getLevelNamesMapping()
             if level not in valid_levels:
-                raise ValueError("Unknown level: %r" % level)
+                exception_message = f"Unknown level: {level}"
+                raise ValueError(exception_message)
             valid_level = valid_levels[level]
         else:
-            raise TypeError("Level not an integer or a valid string: %r"
-                            % (level,))
+            exception_message = f"Level not an integer or a valid string: {level}"
+            raise TypeError(exception_message)
         return valid_level
 
-    def setLevel(self, level):
-        self.level = self._checkLevel(level)
+    def set_level(self, level: int | str) -> None:
+        """Set the logging verbosity level."""
+        self.level = self._check_level(level)
 
-    def format(self, record):
+    def format(self, record: logging.LogRecord) -> str:
+        """Format the specified record."""
         if record.exc_info:
             default_formatter = logging.Formatter()
             formatted_message = default_formatter.format(record)
@@ -53,27 +62,29 @@ class ColorFormatter(logging.Formatter):
             formatted_message = record.getMessage()
 
         level = record.levelname.lower()
-        color_style = self.colors.get(level, dict(fg="bright_white"))
+        color_style = self.COLORS.get(level, {"fg": "bright_white"})
 
         time_string = ""
         location_string = ""
         if self.level < logging.WARNING:
             timestamp = logging.time.localtime(record.created)
-            time_string = click.style(f"{logging.time.strftime('%Y.%m.%d %H:%M:%S', timestamp)}.{record.msecs:03.0f}", **color_style)
+            time_string = click.style(
+                f"{logging.time.strftime('%Y.%m.%d %H:%M:%S', timestamp)}.{record.msecs:03.0f}", **color_style
+            )
             location_string = click.style(f"{record.name:>30}::{record.funcName} {record.lineno:>4}", **color_style)
 
         severity_string = click.style(f"{record.levelname:<8}", **color_style)
         message_strings = [click.style(line, fg="bright_white") for line in formatted_message.splitlines()]
 
         entry_prefix = f"{time_string} {location_string} {severity_string}"
-        formatted_entry = '\n'.join(f"{entry_prefix} {line}".strip() for line in message_strings)
+        formatted_entry = "\n".join(f"{entry_prefix} {line}".strip() for line in message_strings)
 
         return formatted_entry
 
 
 def initialize(log_level: int | str, logger: logging.Logger | None = None) -> None:
     """Configure the logging system to use colors."""
-    click_handler = buildClickHandler(log_level)
+    click_handler = build_click_handler(log_level)
 
     logging.basicConfig(
         handlers=[click_handler],
@@ -84,21 +95,17 @@ def initialize(log_level: int | str, logger: logging.Logger | None = None) -> No
         logger.addHandler(click_handler)
 
 
-def buildClickHandler(log_level) -> ClickHandler:
+def build_click_handler(log_level: int | str) -> ClickHandler:
     """Create a logging Handler with click and color support."""
     click_handler = ClickHandler()
     click_handler.setLevel(log_level)
     color_formatter = ColorFormatter()
-    color_formatter.setLevel(log_level)
+    color_formatter.set_level(log_level)
     click_handler.setFormatter(color_formatter)
     return click_handler
 
 
-def setLoggingLevel(level):
-    """Set the specified level on the underlying handler and formatter."""
-
-
-def show_logging_demo(logger: logging.Logger):
+def show_logging_demo(logger: logging.Logger) -> None:
     """Show the different kinds of messages for the specified logger."""
     logger.debug("debug world")
     logger.info("info world")
@@ -106,7 +113,8 @@ def show_logging_demo(logger: logging.Logger):
     logger.error("error world")
     logger.critical("critical world")
     try:
-        raise NameError("name error world")
+        exception_message = "name error world"
+        raise NameError(exception_message)
     except NameError as err:
         logger.exception(err)
     logger.warning("exception handled")
