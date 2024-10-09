@@ -1,4 +1,5 @@
 """Logging handler and formatter with click colors on stderr."""
+# Reworked from https://github.com/click-contrib/click-log
 
 import logging
 
@@ -32,7 +33,7 @@ class ColorFormatter(logging.Formatter):
     }
 
     def __init__(self: "ColorFormatter", level: int | str = logging.NOTSET) -> None:
-        """Create a new ColorFormatter with the specific logging level."""
+        """Create a new ColorFormatter with the specified logging level."""
         self.level = self._check_level(level)
 
     def _check_level(self: "ColorFormatter", level: int | str) -> int:
