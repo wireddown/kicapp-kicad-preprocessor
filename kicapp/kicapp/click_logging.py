@@ -10,7 +10,7 @@ class ClickHandler(logging.Handler):
 
     _use_stderr = True
 
-    def emit(self, record: logging.LogRecord) -> None:
+    def emit(self: "ClickHandler", record: logging.LogRecord) -> None:
         """Log the specified logging record with click.echo()."""
         try:
             formatted_entry = self.format(record)
@@ -31,11 +31,11 @@ class ColorFormatter(logging.Formatter):
         "debug": {"fg": "white"},
     }
 
-    def __init__(self, level: int | str = logging.NOTSET) -> None:
+    def __init__(self: "ColorFormatter", level: int | str = logging.NOTSET) -> None:
         """Create a new ColorFormatter with the specific logging level."""
         self.level = self._check_level(level)
 
-    def _check_level(self, level: int | str) -> int:
+    def _check_level(self: "ColorFormatter", level: int | str) -> int:
         if isinstance(level, int):
             valid_level = level
         elif str(level) == level:
@@ -49,11 +49,11 @@ class ColorFormatter(logging.Formatter):
             raise TypeError(exception_message)
         return valid_level
 
-    def set_level(self, level: int | str) -> None:
+    def set_level(self: "ColorFormatter", level: int | str) -> None:
         """Set the logging verbosity level."""
         self.level = self._check_level(level)
 
-    def format(self, record: logging.LogRecord) -> str:
+    def format(self: "ColorFormatter", record: logging.LogRecord) -> str:
         """Format the specified record."""
         if record.exc_info:
             default_formatter = logging.Formatter()
@@ -62,7 +62,7 @@ class ColorFormatter(logging.Formatter):
             formatted_message = record.getMessage()
 
         level = record.levelname.lower()
-        color_style = self.COLORS.get(level, {"fg": "bright_white"})
+        color = self.COLORS.get(level, "bright_white")
 
         time_string = ""
         location_string = ""
@@ -77,9 +77,7 @@ class ColorFormatter(logging.Formatter):
         message_strings = [click.style(line, fg="bright_white") for line in formatted_message.splitlines()]
 
         entry_prefix = f"{time_string} {location_string} {severity_string}"
-        formatted_entry = "\n".join(f"{entry_prefix} {line}".strip() for line in message_strings)
-
-        return formatted_entry
+        return "\n".join(f"{entry_prefix} {line}".strip() for line in message_strings)
 
 
 def initialize(log_level: int | str, logger: logging.Logger | None = None) -> None:
