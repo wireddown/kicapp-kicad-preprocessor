@@ -15,7 +15,7 @@ class ClickHandler(logging.Handler):
         try:
             formatted_entry = self.format(record)
             click.echo(formatted_entry, err=self._use_stderr)
-        except Exception:
+        except Exception:  # noqa: BLE001
             self.handleError(record)
 
 
