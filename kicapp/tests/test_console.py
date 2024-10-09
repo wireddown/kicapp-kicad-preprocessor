@@ -16,9 +16,9 @@ def test_console() -> None:
 
 
 def test_default_verbosity() -> None:
-    """Does it use WARNING as the default verbosity?"""
+    """Does it use INFO as the default verbosity?"""
     log_level = console.get_logging_level(quiet=False, verbose=False)
-    assert log_level == logging.WARNING, "Default logging level should be 'logging.WARNING' but it isn't"
+    assert log_level == logging.INFO, "Default logging level should be 'logging.INFO' but it isn't"
 
 
 def test_quiet_verbosity() -> None:
@@ -28,9 +28,9 @@ def test_quiet_verbosity() -> None:
 
 
 def test_verbose_verbosity() -> None:
-    """Does it use INFO as the verbosity for --verbose?"""
+    """Does it use DEBUG as the verbosity for --verbose?"""
     log_level = console.get_logging_level(quiet=False, verbose=True)
-    assert log_level == logging.INFO, "Verbose logging level should be 'logging.INFO' but it isn't"
+    assert log_level == logging.DEBUG, "Verbose logging level should be 'logging.DEBUG' but it isn't"
 
 
 def test_quiet_velocity_wins() -> None:

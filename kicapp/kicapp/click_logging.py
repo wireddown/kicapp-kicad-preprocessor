@@ -66,7 +66,7 @@ class ColorFormatter(logging.Formatter):
 
         time_string = ""
         location_string = ""
-        if self.level < logging.WARNING:
+        if self.level < logging.INFO:
             timestamp = logging.time.localtime(record.created)
             time_string = click.style(
                 f"{logging.time.strftime('%Y.%m.%d %H:%M:%S', timestamp)}.{record.msecs:03.0f}", **color_style
