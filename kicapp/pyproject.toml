@@ -81,6 +81,7 @@ extend-select = [
 
 [tool.pyright]
 verboseOutput = true
+reportAttributeAccessIssue = false
 
 [build-system]
 requires = ["poetry-core"]

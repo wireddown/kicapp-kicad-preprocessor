@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 @click.option("-v", "--verbose", is_flag=True, default=False, help="Enable verbose messages.")
 @click.version_option()
 @click.option("--logging-demo", is_flag=True, default=False, hidden=True)
-def cli(quiet: bool, verbose: bool, logging_demo: bool) -> None:
+def cli(quiet: bool, verbose: bool, logging_demo: bool) -> None:  # noqa: FBT001
     """Run a command to prepare EDA files for importing into KiCad."""
     log_level = get_logging_level(quiet, verbose)
 
@@ -32,7 +32,7 @@ def run() -> None:
     cli()
 
 
-def get_logging_level(quiet: bool, verbose: bool) -> int:
+def get_logging_level(quiet: bool, verbose: bool) -> int:  # noqa: FBT001
     """Get the logging level for the specified quiet and verbose options."""
     log_level = logging.INFO
     if verbose:
