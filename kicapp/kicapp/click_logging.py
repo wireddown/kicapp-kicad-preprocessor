@@ -71,13 +71,17 @@ class ColorFormatter(logging.Formatter):
         return formatted_entry
 
 
-def initialize(log_level) -> None:
+def initialize(log_level: int | str, logger: logging.Logger | None = None) -> None:
     """Configure the logging system to use colors."""
     click_handler = buildClickHandler(log_level)
+
     logging.basicConfig(
         handlers=[click_handler],
         level=log_level,
     )
+
+    if logger:
+        logger.addHandler(click_handler)
 
 
 def buildClickHandler(log_level) -> ClickHandler:
