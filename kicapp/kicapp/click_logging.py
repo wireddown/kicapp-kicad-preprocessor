@@ -1,4 +1,4 @@
-"""Logging handler and formatter with click colors."""
+"""Logging handler and formatter with click colors on stderr."""
 
 import logging
 
