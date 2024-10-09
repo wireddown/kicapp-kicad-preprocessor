@@ -16,11 +16,7 @@ logger = logging.getLogger(__name__)
 @click.option("--logging-demo", is_flag=True, default=False, hidden=True)
 def cli(quiet: bool, verbose: bool, logging_demo: bool) -> None:
     """Run a command to prepare EDA files for importing into KiCad."""
-    log_level = logging.WARNING
-    if verbose:
-        log_level = logging.INFO
-    if quiet:
-        log_level = logging.ERROR
+    log_level = get_logging_level(quiet, verbose)
 
     kicapp.click_logging.initialize(log_level)
 
@@ -33,6 +29,16 @@ def cli(quiet: bool, verbose: bool, logging_demo: bool) -> None:
 def run() -> None:
     """Entrypoint for invocation as module."""
     cli()
+
+
+def get_logging_level(quiet: bool, verbose: bool) -> int:
+    """Get the logging level for the specified quiet and verbose options."""
+    log_level = logging.WARNING
+    if verbose:
+        log_level = logging.INFO
+    if quiet:
+        log_level = logging.ERROR
+    return log_level
 
 
 if __name__ == "__main__":
