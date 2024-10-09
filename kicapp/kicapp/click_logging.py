@@ -22,13 +22,13 @@ class ClickHandler(logging.Handler):
 class ColorFormatter(logging.Formatter):
     """A logging.Formatter that uses click.style() to format records."""
 
-    COLORS = {
-        "critical": {"fg": "bright_magenta"},
-        "exception": {"fg": "red"},
-        "error": {"fg": "red"},
-        "warning": {"fg": "yellow"},
-        "info": {"fg": "cyan"},
-        "debug": {"fg": "white"},
+    COLORS = {  # noqa: RUF012
+        "critical": "bright_magenta",
+        "exception": "red",
+        "error": "red",
+        "warning": "yellow",
+        "info": "cyan",
+        "debug": "white",
     }
 
     def __init__(self: "ColorFormatter", level: int | str = logging.NOTSET) -> None:
@@ -69,11 +69,11 @@ class ColorFormatter(logging.Formatter):
         if self.level < logging.INFO:
             timestamp = logging.time.localtime(record.created)
             time_string = click.style(
-                f"{logging.time.strftime('%Y.%m.%d %H:%M:%S', timestamp)}.{record.msecs:03.0f}", **color_style
+                f"{logging.time.strftime('%Y.%m.%d %H:%M:%S', timestamp)}.{record.msecs:03.0f}", fg=color
             )
-            location_string = click.style(f"{record.name:>30}::{record.funcName} {record.lineno:>4}", **color_style)
+            location_string = click.style(f"{record.name:>30}::{record.funcName} {record.lineno:>4}", fg=color)
 
-        severity_string = click.style(f"{record.levelname:<8}", **color_style)
+        severity_string = click.style(f"{record.levelname:<8}", fg=color)
         message_strings = [click.style(line, fg="bright_white") for line in formatted_message.splitlines()]
 
         entry_prefix = f"{time_string} {location_string} {severity_string}"
