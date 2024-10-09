@@ -32,7 +32,7 @@ def test_quiet_logging_demo(capsys, caplog):  # noqa: ANN001 ANN201
     stderr_messages = output_messages.err.strip()
 
     assert stderr_messages.startswith("ERROR    error world")
-    assert stderr_messages.endswith("ERROR    NameError: name error world")
+    assert stderr_messages.endswith("ERROR    NameError: exception world")
 
 
 def test_verbose_logging_demo(capsys, caplog):  # noqa: ANN001 ANN201

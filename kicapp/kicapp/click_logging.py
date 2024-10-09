@@ -111,7 +111,7 @@ def show_logging_demo(logger: logging.Logger) -> None:
     logger.error("error world")
     logger.critical("critical world")
     try:
-        exception_message = "name error world"
+        exception_message = "exception world"
         raise NameError(exception_message)
     except NameError as err:
         logger.exception(err)
