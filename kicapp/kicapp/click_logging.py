@@ -1,4 +1,33 @@
-"""Logging handler and formatter with click colors on stderr."""
+"""Logging handler and formatter with click colors on stderr.
+
+To use, call initialize() at the beginning of your script. Then create
+a logger at the top of each file following the conventional pattern.
+Likewise, call the logger's message functions for debug, warning, etc.
+
+## Do once
+
+main.py
+
+```
+import logging
+
+import kicadd.click_logging
+
+logger = logging.getLogger(__name__)
+log_level = logging.INFO
+kicapp.click_logging.initialize(log_level)
+logger.info("Hello from main.py")
+```
+
+## Do for each file
+
+```
+import logging
+
+logger = logging.getLogger(__name__)
+logger.info("Hello from each file")
+```
+"""
 # Reworked from https://github.com/click-contrib/click-log
 
 import logging
