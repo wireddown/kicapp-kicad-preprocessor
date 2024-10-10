@@ -1,4 +1,4 @@
-"""Tests for the logging extensions."""
+"""Acceptance tests for the logging extensions."""
 
 import logging
 

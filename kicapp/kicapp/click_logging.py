@@ -16,14 +16,14 @@ class ClickHandler(logging.Handler):
         try:
             formatted_entry = self.format(record)
             click.echo(formatted_entry, err=self._use_stderr)
-        except Exception:  # noqa: BLE001
+        except Exception:  # noqa: BLE001 Python's design pattern for emit()
             self.handleError(record)
 
 
 class ColorFormatter(logging.Formatter):
     """A logging.Formatter that uses click.style() to format records."""
 
-    COLORS = {  # noqa: RUF012
+    COLORS = {  # noqa: RUF012 Switching to tuples for immutability is too cumbersome
         "critical": "bright_magenta",
         "exception": "red",
         "error": "red",
