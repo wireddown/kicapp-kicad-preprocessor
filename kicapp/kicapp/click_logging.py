@@ -1,4 +1,4 @@
-"""Logging handler and formatter with click colors on stderr.
+"""Logging handler with a formatter that uses click colors on stderr.
 
 To use, call initialize() at the beginning of your script. Then create
 a logger at the top of each file following the conventional pattern.
@@ -41,7 +41,7 @@ class ClickHandler(logging.Handler):
     _use_stderr = True
 
     def emit(self: "ClickHandler", record: logging.LogRecord) -> None:
-        """Log the specified logging record with click.echo()."""
+        """Log the specified record with click.echo()."""
         try:
             formatted_entry = self.format(record)
             click.echo(formatted_entry, err=self._use_stderr)
