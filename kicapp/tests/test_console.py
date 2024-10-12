@@ -2,6 +2,7 @@
 
 import logging
 
+import click
 import pytest
 from click.testing import CliRunner
 
@@ -14,6 +15,25 @@ def test_console():  # noqa: ANN201
     result = runner.invoke(console.cli)
     assert result.exit_code == 0
     assert "Show this message and exit." in result.output
+
+
+def test_subcommand():  # noqa: ANN201
+    """Does it invoke a subcommand?"""
+    command_was_invoked_message = "subcommand_name invoked"
+
+    @click.command("subcommand_name")
+    def subcommand_name() -> None:
+        print(command_was_invoked_message)
+
+    console.cli.add_command(subcommand_name)
+
+    runner = CliRunner()
+    result = runner.invoke(
+        console.cli,
+        args=["subcommand_name"],
+    )
+    assert result.exit_code == 0
+    assert result.stdout.strip() == command_was_invoked_message
 
 
 @pytest.mark.parametrize(
